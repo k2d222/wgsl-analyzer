@@ -290,6 +290,8 @@ pub(crate) fn publish_diagnostics(
     let line_index = snap.file_line_index(file_id)?;
     let diagnostics = snap.analysis.diagnostics(config, file_id)?;
 
+    eprintln!("PUBLISH_DIAGNOSTICS");
+
     diagnostics
         .into_iter()
         .map(|diagnostic| {

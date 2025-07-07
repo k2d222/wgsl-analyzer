@@ -375,6 +375,8 @@ impl GlobalState {
                     }
                 }
 
+                eprintln!("PUBLISH DIAGNOSTICS");
+
                 let not = lsp_server::Notification::new(
                     <lsp_types::notification::PublishDiagnostics as lsp_types::notification::Notification>::METHOD.to_owned(),
                     lsp_types::PublishDiagnosticsParams { uri, diagnostics, version },

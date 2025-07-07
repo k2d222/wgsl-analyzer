@@ -18,6 +18,7 @@ use rowan::NodeOrToken;
 use syntax::AstNode as _;
 use vfs::FileId;
 
+#[derive(Clone, Debug)]
 pub struct Diagnostic {
     pub code: DiagnosticCode,
     pub message: String,
@@ -27,6 +28,7 @@ pub struct Diagnostic {
     pub related: Vec<(String, FileRange)>,
 }
 
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub struct DiagnosticCode(&'static str);
 
 impl DiagnosticCode {
@@ -41,7 +43,7 @@ impl DiagnosticCode {
     }
 }
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Severity {
     Error,
     WeakWarning,

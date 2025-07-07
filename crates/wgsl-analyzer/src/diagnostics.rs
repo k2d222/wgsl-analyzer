@@ -288,15 +288,14 @@ pub(crate) fn convert_diagnostic(
     line_index: &crate::line_index::LineIndex,
     diagnostic: Diagnostic,
 ) -> lsp_types::Diagnostic {
+    eprintln!("CONVERT_DIAGNOSTIC {diagnostic:?}");
     lsp_types::Diagnostic {
         range: lsp::to_proto::range(line_index, diagnostic.range),
         severity: Some(DiagnosticSeverity::ERROR),
         code: Some(lsp_types::NumberOrString::String(
             diagnostic.code.as_str().to_owned(),
         )),
-        code_description: Some(lsp_types::CodeDescription {
-            href: lsp_types::Url::parse(&diagnostic.code.url()).unwrap(),
-        }),
+        code_description: None,
         source: Some("rust-analyzer".to_owned()),
         message: diagnostic.message,
         related_information: None,

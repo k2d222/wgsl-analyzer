@@ -175,10 +175,11 @@ impl Analysis {
     /// Computes the set of parser level diagnostics for the given file.
     pub fn syntax_diagnostics(
         &self,
-        _config: &DiagnosticsConfig,
-        _file_id: FileId,
+        config: &DiagnosticsConfig,
+        file_id: FileId,
     ) -> Cancellable<Vec<Diagnostic>> {
-        self.with_db(|_db| vec![])
+        // self.with_db(|_db| vec![])
+        self.diagnostics(config, file_id)
     }
 
     /// Computes the set of semantic diagnostics for the given file.
