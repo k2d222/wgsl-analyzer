@@ -521,7 +521,6 @@ impl GlobalState {
         }
 
         if let Some(diagnostic_changes) = self.diagnostics.take_changes() {
-            eprintln!("TAKE DIAGNOSTICS");
             for file_id in diagnostic_changes {
                 let uri = file_id_to_url(&self.vfs.read().0, file_id);
                 let version = from_proto::vfs_path(&uri).ok().and_then(|path| {
@@ -628,16 +627,12 @@ impl GlobalState {
                 //     // forever if we emitted them here.
                 //     !database.source_root(source_root).is_library()
                 // })
-				.map(|file_id| {
-					file_id.0
-				})
+                .map(|file_id| {
+                    file_id.0
+                })
                 .collect::<Arc<_>>()
         };
         tracing::trace!("updating notifications for {:?}", subscriptions);
-        eprintln!(
-            "UPDATE_DIAGNOSTICS updating notifications for {:?}",
-            subscriptions
-        );
         // Split up the work on multiple threads, but we don't wanna fill the entire task pool with
         // diagnostic tasks, so we limit the number of tasks to a quarter of the total thread pool.
         let max_tasks = self.config.main_loop_number_of_threads().div(4).max(1);
@@ -685,7 +680,6 @@ impl GlobalState {
                         }) else {
                             return;
                         };
-                        eprint!("SEND DIAGNOSTICS: {diags:?}");
                         sender
                             .send(Task::Diagnostics(DiagnosticsTaskKind::Syntax(
                                 generation, diags,
@@ -798,7 +792,6 @@ impl GlobalState {
             Task::Retry(request) if !self.is_completed(&request) => self.on_request(request),
             Task::Retry(_) => (),
             Task::Diagnostics(kind) => {
-                eprintln!("DIAGNOSTICS_TASKS");
                 self.diagnostics.set_native_diagnostics(kind);
             },
             Task::PrimeCaches(progress) => match progress {

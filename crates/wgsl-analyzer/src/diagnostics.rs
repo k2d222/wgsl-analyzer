@@ -288,7 +288,6 @@ pub(crate) fn convert_diagnostic(
     line_index: &crate::line_index::LineIndex,
     diagnostic: Diagnostic,
 ) -> lsp_types::Diagnostic {
-    eprintln!("CONVERT_DIAGNOSTIC {diagnostic:?}");
     lsp_types::Diagnostic {
         range: lsp::to_proto::range(line_index, diagnostic.range),
         severity: Some(DiagnosticSeverity::ERROR),
